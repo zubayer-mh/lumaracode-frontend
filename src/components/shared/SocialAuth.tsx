@@ -29,6 +29,7 @@ export default function SocialAuth() {
             }
         }
         asyncWrapper()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [session])
 
     const handleGoogleLogin = async (e: any) => {

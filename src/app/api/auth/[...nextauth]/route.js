@@ -55,12 +55,12 @@ const options = {
         _id: { label: "_id", type: "text" },
         email: { label: "email", type: "text" },
         password: { label: "password", type: "text" },
-        verified: { label: "verified", type: "text" },
+        verified: { label: "verified", type: "boolean" },
         provider: { label: "provider", type: "text" }
       },
 
       async authorize(credentials, req) {
-
+        console.log(credentials)
         if (credentials) {
           return credentials
         } else {
@@ -75,26 +75,3 @@ const options = {
 export const handler = NextAuth(options);
 
 export { handler as GET, handler as POST };
-
-
-// try {
-//   const res = await fetch('http://localhost:5000/sign-up', {
-//     method: 'POST',
-//     body: JSON.stringify({ email: 'zzzz@gmail.com', password: '33333333333' })
-//   })
-
-//   const data = await res.json()
-
-//   console.log("data", data)
-
-//   if (data?.user) {
-//     return data.user
-//   } else {
-//     return null
-//   }
-
-
-
-// } catch (err) {
-//   console.log(err)
-// }

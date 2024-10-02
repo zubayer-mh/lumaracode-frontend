@@ -4,13 +4,21 @@ import axios from 'axios'
 import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 export default function EmailVerification() {
     const [loading, setLoading] = useState<boolean>()
     const [errMessage, setErrMessage] = useState("")
     const router = useRouter()
     const session = useSession()
+
+    useEffect(() => {
+        console.log("email ver: ", session)
+        if ((session.data?.user as any)?.verified === "true") {
+            router.push("/dashboard")
+        }
+    }, [session])
+
 
     const handleEmailVerification = async (e: any) => {
 
@@ -57,7 +65,7 @@ export default function EmailVerification() {
                                 </div>
                                 <p className='text-red-500 font-semibold mb-1' >{errMessage}</p>
                                 <div className="flex items-center justify-between">
-                                    <button  type="submit" className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                                    <button type="submit" className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                                         Verify
                                     </button>
                                 </div>

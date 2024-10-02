@@ -25,9 +25,11 @@ export default function Login() {
             e.preventDefault()
             const email = e.target.email.value
             const password = e.target.password.value
+
             const res = await axios.post("http://localhost:5000/login", { email, password })
+
             if (res.data?.user?._id) {
-                signIn("credentials", { email, password, redirect: false })
+                signIn("credentials", { email: res.data?.user.email, password: res.data?.user.password, verified: res.data?.user.verified, redirect: false })
                 router.push("/dashboard")
             } else {
                 setErrMessage(res.data?.message)

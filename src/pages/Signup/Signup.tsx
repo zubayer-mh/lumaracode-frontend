@@ -32,7 +32,8 @@ export default function Signup() {
                 headers: {
                     "content-type": "application/json"
                 },
-                body: JSON.stringify({ email, password })
+                body: JSON.stringify({ email, password }),
+                cache: "no-store"
             })
 
             const data = await res.json()

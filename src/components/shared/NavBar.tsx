@@ -15,6 +15,7 @@ export default function NavBar() {
         if (pathname === "/" && session.data) {
             router.push("/dashboard")
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [session])
 
     return (
@@ -38,9 +39,16 @@ export default function NavBar() {
                 <button className='text-white font-bold px-4 py-2 bg-[#3e54cb] rounded-md mr-4' >
                     <Link href={"#"} >Contact Us</Link>
                 </button>
-                <button className='text-white font-bold px-4 py-2 bg-[#3e54cb] rounded-md' >
-                    <Link href={"/sign-up"} >Sign Up / Login</Link>
-                </button>
+                {
+                    session.status === "authenticated" ?
+                        <button className='text-white font-bold px-4 py-2 bg-[#3e54cb] rounded-md' >
+                            <Link href={"/sign-up"} >Dashboard</Link>
+                        </button>
+                        :
+                        <button className='text-white font-bold px-4 py-2 bg-[#3e54cb] rounded-md' >
+                            <Link href={"/sign-up"} >Sign Up / Login</Link>
+                        </button>
+                }
             </div>
         </div>
     )

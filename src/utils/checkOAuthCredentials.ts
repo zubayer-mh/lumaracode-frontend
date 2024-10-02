@@ -4,7 +4,8 @@ export const checkOAuthCredentials = async (email: string, provider: string) => 
         headers: {
             "content-type": "application/json"
         },
-        body: JSON.stringify({ email, provider })
+        body: JSON.stringify({ email, provider }),
+        cache: "no-store"
     })
     const data = await res.json()
     console.log(data)
