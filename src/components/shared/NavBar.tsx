@@ -39,7 +39,7 @@ export default function NavBar() {
                     <Link href={"#"} >Contact Us</Link>
                 </button>
                 <button className='text-white font-bold px-4 py-2 bg-[#3e54cb] rounded-md' >
-                    <Link href={"/sign-up"} >Sign Up</Link>
+                    <Link href={"/sign-up"} >Sign Up / Login</Link>
                 </button>
             </div>
         </div>

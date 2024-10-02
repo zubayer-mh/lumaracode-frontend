@@ -7,7 +7,7 @@ export default function DashboardNavbar() {
     const session = useSession()
     const router = useRouter()
     const handleLogout = () => {
-        signOut()
+        signOut({ redirect: false })
         router.push("/")
     }
     useEffect(() => {

@@ -1,5 +1,5 @@
 import MidSection from '@/components/Home/MidSection'
-import NavBar from '@/components/NavBar'
+import NavBar from '@/components/shared/NavBar'
 import React from 'react'
 
 export default function page() {

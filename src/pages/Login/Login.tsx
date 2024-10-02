@@ -26,21 +26,21 @@ export default function Login() {
     }
 
     return (
-        <div>
-            <div className='grid grid-cols-2' >
-                <div className='flex justify-center items-center pl-[60px]' >
+        <div className='mt-12 lg:mt-0'>
+            <div className='grid grid-cols-1 lg:grid-cols-2' >
+                <div className='flex justify-center items-center lg:pl-[60px]' >
                     <div>
                         <div className='mb-[40px]' >
-                            <p className='text-[40px] text-[#383d54] font-bold' >Login to your Account!</p>
+                            <p className='text-[30px] lg:text-[40px] text-[#383d54] font-bold text-center lg:text-start' >Login to your Account!</p>
                         </div>
                         <SocialAuth />
 
-                        <div className='mb-[10px] w-[300px]' >
+                        <div className='mb-[10px] w-[350px]' >
                             <p className='text-[20px] text-[#383d54] font-bold text-center' >Or</p>
                         </div>
 
                         <div>
-                            <form className="rounded mb-4 w-[300px]">
+                            <form className="rounded mb-4 w-[350px]">
                                 <div className="mb-4">
                                     <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
                                         Email
