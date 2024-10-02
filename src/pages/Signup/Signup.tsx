@@ -5,17 +5,19 @@ import { signIn, useSession } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 export default function Signup() {
     const session = useSession()
     const router = useRouter()
+    const [errMessage, setErrMessage] = useState("")
 
-    // useEffect(() => {
-    //     if (session.data?.user) {
-    //         router.push("/dashboard")
-    //     }
-    // }, [session])
+    useEffect(() => {
+        console.log("sign-up session: ", session)
+        if (session.data?.user) {
+
+        }
+    }, [session])
 
 
     const credentialHandler = async (e: any) => {
@@ -23,8 +25,27 @@ export default function Signup() {
             e.preventDefault()
             const email = e.target.email.value
             const password = e.target.password.value
-            const test = await signIn("credentials", { email, password, redirect: false })
-            router.push("/email-verification")
+
+
+            const res = await fetch('http://localhost:5000/sign-up', {
+                method: 'POST',
+                headers: {
+                    "content-type": "application/json"
+                },
+                body: JSON.stringify({ email, password })
+            })
+
+            const data = await res.json()
+
+            console.log("this is dataaaaa", data)
+
+            if (data.user?._id) {
+                signIn("credentials", {...data.user, redirect: false})
+                router.push("/email-verification")
+            } else {
+                setErrMessage(data.message)
+            }
+
         } catch (err) {
             console.log(err)
         }
@@ -51,7 +72,7 @@ export default function Signup() {
                                         Password
                                     </label>
                                     <input name='password' className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="password" placeholder="********" />
-                                    {/* <p className="text-red-500 text-xs italic">Email or Password is incorrect!</p> */}
+                                    <p className="text-red-500 italic">{errMessage}</p>
                                 </div>
                                 <div className="flex items-center justify-between">
                                     <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
@@ -77,7 +98,7 @@ export default function Signup() {
                     </div>
                 </div>
                 <div className='w-[100%] hidden lg:block' >
-                    <Image src={"/images/signup-page-banner.svg"} className='max-h-[100%]' height={0} width={0} style={{ height: "100vh", width: "100%" }} alt='' />
+                    <Image src={"/images/signup-page-banner.svg"} className='max-h-[100%]' height={0} width={0} style={{ height: "100vh", width: "100%" }} priority alt='' />
                 </div>
             </div>
         </div>

@@ -13,13 +13,13 @@ export default function EmailVerification() {
     const session = useSession()
 
     const handleEmailVerification = async (e: any) => {
+
         try {
             e.preventDefault()
             setLoading(true)
             const otp = e.target.verificationCode.value
+            console.log("This is session: ", session)
             const res = await axios.put("http://localhost:5000/email-verification", { email: session.data?.user?.email, otp })
-
-            console.log(res.data)
 
             if (res.data?.verified) {
                 router.push("/dashboard")

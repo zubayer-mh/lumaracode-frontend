@@ -1,15 +1,17 @@
 "use client"
 
 import SocialAuth from '@/components/shared/SocialAuth'
+import axios from 'axios'
 import { signIn, useSession } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 export default function Login() {
     const session = useSession()
     const router = useRouter()
+    const [errMessage, setErrMessage] = useState()
 
     useEffect(() => {
         if (session.data?.user) {
@@ -18,11 +20,21 @@ export default function Login() {
     }, [session])
 
 
-    const credentialHandler = (e: any) => {
-        e.preventDefault()
-        const email = e.target.email.value
-        const password = e.target.password.value
-        signIn("credentials", { email, password })
+    const credentialHandler = async (e: any) => {
+        try {
+            e.preventDefault()
+            const email = e.target.email.value
+            const password = e.target.password.value
+            const res = await axios.post("http://localhost:5000/login", { email, password })
+            if (res.data?.user?._id) {
+                signIn("credentials", { email, password, redirect: false })
+                router.push("/dashboard")
+            } else {
+                setErrMessage(res.data?.message)
+            }
+        } catch (err) {
+            console.log(err)
+        }
     }
 
     return (
@@ -40,7 +52,7 @@ export default function Login() {
                         </div>
 
                         <div>
-                            <form className="rounded mb-4 w-[350px]">
+                            <form onSubmit={credentialHandler} className="rounded mb-4 w-[350px]">
                                 <div className="mb-4">
                                     <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
                                         Email
@@ -52,10 +64,10 @@ export default function Login() {
                                         Password
                                     </label>
                                     <input name='password' className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="password" placeholder="********" />
-                                    {/* <p className="text-red-500 text-xs italic">Email or Password is incorrect!</p> */}
+                                    <p className="text-red-500 italic">{errMessage}</p>
                                 </div>
                                 <div className="flex items-center justify-between">
-                                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
+                                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
                                         Login
                                     </button>
                                     <a className="inline-block align-baseline text-sm text-blue-500 hover:text-blue-800" href="#">

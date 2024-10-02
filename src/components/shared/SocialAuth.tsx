@@ -1,16 +1,45 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './google-login.css'
-import { signIn } from 'next-auth/react'
+import { signIn, signOut, useSession } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
+import axios from 'axios'
+import { checkOAuthCredentials } from '@/utils/checkOAuthCredentials'
 
 export default function SocialAuth() {
-    const handleGoogleLogin = (e: any) => {
+    const session = useSession()
+    const router = useRouter()
+    const [errMessageGoogle, setErrMessageGoogle] = useState("")
+    const [errMessageFacebook, setErrMessageFacebook] = useState("")
+
+    useEffect(() => {
+        const asyncWrapper = async () => {
+            const provider = (session.data?.user as any)?.provider
+            if (provider === "google" || provider === "facebook") {
+                const result = await checkOAuthCredentials(session.data?.user?.email || "", (session.data?.user as any)?.provider || "")
+                if (result.valid) {
+                    router.push("/dashboard")
+                } else {
+                    signOut({ redirect: false })
+                    if (provider === 'google') {
+                        setErrMessageGoogle(result.message)
+                    } else {
+                        setErrMessageFacebook(result.message)
+                    }
+                }
+            }
+        }
+        asyncWrapper()
+    }, [session])
+
+    const handleGoogleLogin = async (e: any) => {
         e.preventDefault()
-        signIn("google", {redirect: false})
+        signIn("google", { redirect: false })
     }
-    const handleFacebookLogin = (e: any) => {
+    const handleFacebookLogin = async (e: any) => {
         e.preventDefault()
-        signIn("facebook", {redirect: false})
+        signIn("facebook", { redirect: false })
     }
+
     return (
         <>
             <button onClick={handleGoogleLogin} className="gsi-material-button flex justify-center items-center my-4" >
@@ -28,13 +57,16 @@ export default function SocialAuth() {
                     <span style={{ display: "none" }}>Continue with Google</span>
                 </div>
             </button>
+            <p className='text-red-500 font-bold' >{errMessageGoogle}</p>
 
-            <button onClick={handleFacebookLogin} type="button" className="w-[350px] py-2 flex justify-center items-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white transition ease-in duration-200 text-center text-base shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-md my-4 mb-8">
+            <button onClick={handleFacebookLogin} type="button" className="w-[350px] py-2 flex justify-center items-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white transition ease-in duration-200 text-center text-base shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-md my-4 mb-2">
                 <svg width="20" height="20" fill="currentColor" className="mr-2" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
                     <path d="M1343 12v264h-157q-86 0-116 36t-30 108v189h293l-39 296h-254v759h-306v-759h-255v-296h255v-218q0-186 104-288.5t277-102.5q147 0 228 12z"></path>
                 </svg>
                 <span className='text-[14px]' >Sign in with Facebook</span>
             </button>
+            <p className='text-red-500 font-bold' >{errMessageFacebook}</p>
+
         </>
     )
 }

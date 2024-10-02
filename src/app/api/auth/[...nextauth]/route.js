@@ -1,10 +1,43 @@
-import NextAuth from "next-auth";
+import NextAuth, { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import FacebookProvider from "next-auth/providers/facebook";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 const options = {
   secret: "asdfasdfasdhjfjasdhfjasdfa",
+
+  callbacks: {
+    async jwt({ token, account, user }) {
+      if (account?.provider) {
+        token.provider = account.provider
+      }
+      if (user) {
+        token.email = user.email
+        token.password = user.password
+        token.verified = user.verified
+        token.image = user.image
+        token.name = user.name
+      }
+
+      return token
+    },
+
+    async session({ session, token }) {
+      if (token?.provider) {
+        session.user.provider = token.provider
+      }
+
+      if (token) {
+        session.user.image = token.image
+        session.user.verified = token.verified
+        session.user.image = token.image
+        session.user.name = token.name
+      }
+
+      return session
+    }
+  },
+
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_APP_ID || "",
@@ -15,39 +48,28 @@ const options = {
       clientId: process.env.FACEBOOK_APP_ID || "",
       clientSecret: process.env.FACEBOOK_SECRET || "",
     }),
+
     CredentialsProvider({
-      // The name to display on the sign in form (e.g. "Sign in with...")
       name: "Credentials",
-      // `credentials` is used to generate a form on the sign in page.
-      // You can specify which fields should be submitted, by adding keys to the `credentials` object.
-      // e.g. domain, username, password, 2FA token, etc.
-      // You can pass any HTML attribute to the <input> tag through the object.
       credentials: {
+        _id: { label: "_id", type: "text" },
         email: { label: "email", type: "text" },
-        password: { label: "password", type: "password" }
+        password: { label: "password", type: "text" },
+        verified: { label: "verified", type: "text" },
+        provider: { label: "provider", type: "text" }
       },
 
       async authorize(credentials, req) {
 
-        const user = { id: "", email: credentials?.email, password: credentials?.password }
-
-
-        await fetch('http://localhost:5000/sign-up', {
-          method: 'POST',
-          headers: {
-            "content-type": "application/json"
-          },
-          body: JSON.stringify({ email: credentials?.email, password: credentials?.password })
-        })
-
-        if (user) {
-          return user
+        if (credentials) {
+          return credentials
         } else {
           return null
         }
+        
       }
     })
-  ]
+  ],
 };
 
 export const handler = NextAuth(options);

@@ -1,12 +1,12 @@
-"use client"
-
 import DashboardNavbar from '@/components/Dashboard/DashboardNavbar'
 import DashboardSidebar from '@/components/Dashboard/DashboardSidebar'
-import Dashboard from '@/pages/Dashboard/Dashboard'
 import React from 'react'
 
-export default function page() {
+export default function Dashboard() {
     return (
-        <Dashboard />
+        <div className='grid grid-cols-12 h-[100vh]' >
+            <DashboardSidebar />
+            <DashboardNavbar />
+        </div>
     )
 }
