@@ -18,7 +18,7 @@ export default function DashboardNavbar() {
     }
 
     useEffect(() => {
-        if (session.status === "unauthenticated") {
+        if (session?.status === "unauthenticated") {
             router.push("/")
         }
     }, [session])
@@ -34,7 +34,7 @@ export default function DashboardNavbar() {
                 </form>
 
                 <div className="rounded-full h-[45px] w-[45px] overflow-hidden" >
-                    <Image src={session.data?.user?.image || ""} width={50} height={50} priority alt='' />
+                    <Image src={session?.data?.user?.image || ""} width={50} height={50} priority alt='' />
                 </div>
                 <div>
                     <button onClick={handleLogout} className='text-white font-bold px-4 py-2 bg-[#3e54cb] rounded-md mx-2' >Logout</button>

@@ -14,7 +14,7 @@ export default function Login() {
     const [errMessage, setErrMessage] = useState()
 
     useEffect(() => {
-        if (session.data?.user) {
+        if (session?.data?.user) {
             router.push("/dashboard")
         }
     }, [session])
@@ -26,13 +26,13 @@ export default function Login() {
             const email = e.target.email.value
             const password = e.target.password.value
 
-            const res = await axios.post("http://localhost:5000/login", { email, password })
+            const res = await axios.post("https://lumaracode-backend.onrender.com/login", { email, password })
 
-            if (res.data?.user?._id) {
-                signIn("credentials", { email: res.data?.user.email, password: res.data?.user.password, verified: res.data?.user.verified, redirect: false })
+            if (res?.data?.user?._id) {
+                signIn("credentials", { email: res?.data?.user.email, password: res?.data?.user.password, verified: res?.data?.user.verified, redirect: false })
                 router.push("/dashboard")
             } else {
-                setErrMessage(res.data?.message)
+                setErrMessage(res?.data?.message)
             }
         } catch (err) {
             console.log(err)

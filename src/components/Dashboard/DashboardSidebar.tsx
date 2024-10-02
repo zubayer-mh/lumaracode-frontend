@@ -12,7 +12,7 @@ export default function DashboardSidebar() {
             <div className='col-span-2 mt-4' >
                 <Image src={"/icons/foody.svg"} style={{ margin: "auto" }} height={150} width={150} priority alt='' />
                 {
-                    (session.data?.user as any)?.verified !== "true"
+                    (session?.data?.user as any)?.verified === "false" && (session?.data?.user as any)?.provider == "credentials"
                     &&
                     <div className='flex flex-col items-center'>
                         <p className='text-red-500 font-bold mb-2' >Email is not Verified!</p>

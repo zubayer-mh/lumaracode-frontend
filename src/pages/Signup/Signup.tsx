@@ -14,7 +14,7 @@ export default function Signup() {
 
     useEffect(() => {
         console.log("sign-up session: ", session)
-        if (session.data?.user) {
+        if (session?.data?.user) {
 
         }
     }, [session])
@@ -27,7 +27,7 @@ export default function Signup() {
             const password = e.target.password.value
 
 
-            const res = await fetch('http://localhost:5000/sign-up', {
+            const res = await fetch('https://lumaracode-backend.onrender.com/sign-up', {
                 method: 'POST',
                 headers: {
                     "content-type": "application/json"

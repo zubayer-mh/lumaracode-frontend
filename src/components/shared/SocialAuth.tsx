@@ -13,9 +13,9 @@ export default function SocialAuth() {
 
     useEffect(() => {
         const asyncWrapper = async () => {
-            const provider = (session.data?.user as any)?.provider
+            const provider = (session?.data?.user as any)?.provider
             if (provider === "google" || provider === "facebook") {
-                const result = await checkOAuthCredentials(session.data?.user?.email || "", (session.data?.user as any)?.provider || "")
+                const result = await checkOAuthCredentials(session?.data?.user?.email || "", (session?.data?.user as any)?.provider || "")
                 if (result.valid) {
                     router.push("/dashboard")
                 } else {

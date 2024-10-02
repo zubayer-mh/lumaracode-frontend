@@ -8,7 +8,7 @@ export default function ChechAuth() {
     const session = useSession()
     const router = useRouter()
 
-    if (session.status === "unauthenticated") {
+    if (session?.status === "unauthenticated") {
         router.push("/login")
     }
     

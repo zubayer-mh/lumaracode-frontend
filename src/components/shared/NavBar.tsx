@@ -12,7 +12,7 @@ export default function NavBar() {
     const pathname = usePathname()
 
     useEffect(() => {
-        if (pathname === "/" && session.data) {
+        if (pathname === "/" && session?.data) {
             router.push("/dashboard")
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -40,7 +40,7 @@ export default function NavBar() {
                     <Link href={"#"} >Contact Us</Link>
                 </button>
                 {
-                    session.status === "authenticated" ?
+                    session?.status === "authenticated" ?
                         <button className='text-white font-bold px-4 py-2 bg-[#3e54cb] rounded-md' >
                             <Link href={"/sign-up"} >Dashboard</Link>
                         </button>

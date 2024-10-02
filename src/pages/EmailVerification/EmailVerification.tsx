@@ -14,7 +14,7 @@ export default function EmailVerification() {
 
     useEffect(() => {
         console.log("email ver: ", session)
-        if ((session.data?.user as any)?.verified === "true") {
+        if ((session?.data?.user as any)?.verified === "true") {
             router.push("/dashboard")
         }
     }, [session])
@@ -27,9 +27,9 @@ export default function EmailVerification() {
             setLoading(true)
             const otp = e.target.verificationCode.value
             console.log("This is session: ", session)
-            const res = await axios.put("http://localhost:5000/email-verification", { email: session.data?.user?.email, otp })
+            const res = await axios.put("https://lumaracode-backend.onrender.com/email-verification", { email: session?.data?.user?.email, otp })
 
-            if (res.data?.verified) {
+            if (res?.data?.verified) {
                 router.push("/dashboard")
             } else {
                 setErrMessage("Incorrect Verification Code!")
