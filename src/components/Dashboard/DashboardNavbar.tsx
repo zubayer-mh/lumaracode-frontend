@@ -32,9 +32,22 @@ export default function DashboardNavbar() {
                         <Image src={"/icons/search.svg"} height={25} width={25} priority alt='' />
                     </div>
                 </form>
-
+                <div className='mx-4' >
+                    {
+                        session ?
+                            <p className='font-bold'>Logged in with: <span className='text-green-500' >{session.data?.user?.email}</span></p>
+                            :
+                            ""
+                    }
+                </div>
                 <div className="rounded-full h-[45px] w-[45px] overflow-hidden" >
-                    <Image src={session?.data?.user?.image || ""} width={50} height={50} priority alt='' />
+                    {
+                        session?.data?.user?.image ?
+                            <Image src={session?.data?.user?.image || ""} width={50} height={50} priority alt='' />
+                            :
+                            <Image src={"/images/dummy.jpg"} width={50} height={50} priority alt='' />
+
+                    }
                 </div>
                 <div>
                     <button onClick={handleLogout} className='text-white font-bold px-4 py-2 bg-[#3e54cb] rounded-md mx-2' >Logout</button>
