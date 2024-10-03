@@ -1,5 +1,6 @@
 "use client"
 
+import Spinner from '@/components/shared/Spinner'
 import axios from 'axios'
 import { useSession } from 'next-auth/react'
 import Image from 'next/image'
@@ -66,7 +67,12 @@ export default function EmailVerification() {
                                 <p className='text-red-500 font-semibold mb-1' >{errMessage}</p>
                                 <div className="flex items-center justify-between">
                                     <button type="submit" className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                                        Verify
+                                        {
+                                            loading ?
+                                                <Spinner />
+                                                :
+                                                "Verify"
+                                        }
                                     </button>
                                 </div>
                             </form>

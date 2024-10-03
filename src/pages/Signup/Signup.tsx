@@ -1,6 +1,7 @@
 "use client"
 
 import SocialAuth from '@/components/shared/SocialAuth'
+import Spinner from '@/components/shared/Spinner'
 import { signIn, useSession } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -11,6 +12,7 @@ export default function Signup() {
     const session = useSession()
     const router = useRouter()
     const [errMessage, setErrMessage] = useState("")
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         console.log("sign-up session: ", session)
@@ -26,7 +28,7 @@ export default function Signup() {
             const email = e.target.email.value
             const password = e.target.password.value
 
-
+            setLoading(true)
             const res = await fetch('https://lumaracode-backend.onrender.com/sign-up', {
                 method: 'POST',
                 headers: {
@@ -41,14 +43,15 @@ export default function Signup() {
             console.log("this is dataaaaa", data)
 
             if (data.user?._id) {
-                signIn("credentials", {...data.user, redirect: false})
+                signIn("credentials", { ...data.user, redirect: false })
                 router.push("/email-verification")
             } else {
                 setErrMessage(data.message)
             }
-
+            setLoading(false)
         } catch (err) {
             console.log(err)
+            setLoading(false)
         }
     }
 
@@ -77,7 +80,12 @@ export default function Signup() {
                                 </div>
                                 <div className="flex items-center justify-between">
                                     <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-                                        Sign Up
+                                        {
+                                            loading ?
+                                                <Spinner />
+                                                :
+                                                "Sign Up"
+                                        }
                                     </button>
                                 </div>
                                 <div className='mt-2'>
