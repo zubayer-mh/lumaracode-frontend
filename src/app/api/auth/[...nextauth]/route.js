@@ -39,23 +39,12 @@ const options = {
   },
 
   providers: [
-
-
-    // GOOGLE_APP_ID = "72195280535-8ngel3q76lsetdhfefnqk1q49vpkra9k.apps.googleusercontent.com"
-    // GOOGLE_SECRET = "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"
-    // FACEBOOK_APP_ID = "1074369130721955"
-    // FACEBOOK_SECRET = "97d558a8cda3cc34982ae1665898b848"
-
     GoogleProvider({
       clientId: process.env.GOOGLE_APP_ID || "",
       clientSecret: process.env.GOOGLE_SECRET || "",
-      // clientId: "72195280535-8ngel3q76lsetdhfefnqk1q49vpkra9k.apps.googleusercontent.com",
-      // clientSecret: "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"
     },),
 
     FacebookProvider({
-      // clientId: "1074369130721955",
-      // clientSecret: "97d558a8cda3cc34982ae1665898b848"
       clientId: process.env.FACEBOOK_APP_ID || "",
       clientSecret: process.env.FACEBOOK_SECRET || "",
     }),
