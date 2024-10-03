@@ -81,7 +81,7 @@ export default function EmailVerification() {
                 </div>
 
                 <div className='w-[100%]' >
-                    <Image src={"/images/signup-page-banner.svg"} className='max-h-[100%]' height={0} width={0} style={{ height: "100vh", width: "100%" }} alt='' />
+                    <Image src={"/images/signup-page-banner.png"} className='max-h-[100%]' height={2000} width={1000} style={{ height: "100vh", width: "100%" }} alt='' />
                 </div>
 
             </div>

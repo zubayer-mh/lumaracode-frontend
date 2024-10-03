@@ -58,7 +58,7 @@ export default function Signup() {
     return (
         <div className='mt-12 lg:mt-0'>
             <div className='grid grid-cols-1 lg:grid-cols-2' >
-                <div className='flex justify-center items-center lg:pl-[60px]' >
+                <div className='flex justify-center items-center' >
                     <div>
                         <div className='mb-[30px]' >
                             <p className='text-[30px] lg:text-[40px] text-[#383d54] font-bold text-center lg:text-start' >Create Your Account!</p>
@@ -107,7 +107,8 @@ export default function Signup() {
                     </div>
                 </div>
                 <div className='w-[100%] hidden lg:block' >
-                    <Image src={"/images/signup-page-banner.svg"} className='max-h-[100%]' height={0} width={0} style={{ height: "100vh", width: "100%" }} priority alt='' />
+                    <Image src={"/images/signup-page-banner.png"} className='' height={2000} width={1000} style={{ height: "100vh", width: "100%" }} priority alt='' />
+                    {/* <img src="/images/signup-page-banner.png" alt="" /> */}
                 </div>
             </div>
         </div>

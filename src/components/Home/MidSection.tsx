@@ -25,7 +25,7 @@ export default function MidSection() {
 
             {/* second part */}
             <div className='min-w-[550px]' >
-                <Image src={"/images/hero-image.svg"} height={600} width={550} alt=''  />
+                <Image src={"/images/hero-image.png"} height={600} width={550} alt=''  />
             </div>
         </div>
     )

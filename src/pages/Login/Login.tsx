@@ -47,7 +47,7 @@ export default function Login() {
     return (
         <div className='mt-12 lg:mt-0'>
             <div className='grid grid-cols-1 lg:grid-cols-2' >
-                <div className='flex justify-center items-center lg:pl-[60px]' >
+                <div className='flex justify-center items-center' >
                     <div>
                         <div className='mb-[40px]' >
                             <p className='text-[30px] lg:text-[40px] text-[#383d54] font-bold text-center lg:text-start' >Login to your Account!</p>
@@ -95,7 +95,7 @@ export default function Login() {
                     </div>
                 </div>
                 <div className='w-[100%]' >
-                    <Image src={"/images/signup-page-banner.svg"} className='max-h-[100%]' height={0} width={0} style={{ height: "100vh", width: "100%" }} alt='' />
+                    <Image src={"/images/signup-page-banner.png"} className='max-h-[100%]' height={2000} width={1000} style={{ height: "100vh", width: "100%" }} alt='' />
                 </div>
             </div>
         </div>
