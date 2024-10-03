@@ -14,4 +14,5 @@ export const checkOAuthCredentials = async (email: string, provider: string) => 
     } else {
         return { valid: false, message: (data as any).message }
     }
+    
 }
